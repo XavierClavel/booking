@@ -23,6 +23,8 @@ enum class ForbiddenCause(val key: String) {
 
 enum class NotFoundCause(val key: String) {
     USER_NOT_FOUND("user_not_found"),
+    ROOM_NOT_FOUND("room_not_found"),
+    BOOKING_NOT_FOUND("booking_not_found"),
 }
 
 enum class BadRequestCause (val key: String) {
@@ -31,4 +33,6 @@ enum class BadRequestCause (val key: String) {
     USERNAME_ALREADY_USED("username_already_used"),
     OAUTH_ONLY("oauth_only"),
     INVALID_REQUEST("invalid_request"),
+    ROOM_IS_ALREADY_INACTIVE("room_is_already_inactive"),
+    ROOM_IS_ALREADY_ACTIVE("room_is_already_active"),
 }
