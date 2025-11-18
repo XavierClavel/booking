@@ -1,9 +1,6 @@
-package com.xavierclavel.models.models
+package com.xavierclavel.models
 
-import com.xavierclavel.dtos.UserOut
 import com.xavierclavel.enums.RoomStatus
-import com.xavierclavel.models.Room
-import com.xavierclavel.models.User
 import io.ebean.Model
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

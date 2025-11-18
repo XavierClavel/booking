@@ -9,6 +9,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.Version
 
 @Entity
 @Table(name = "rooms")
@@ -28,5 +29,6 @@ class Room(
     @Id
     var id: Long = 0
 
-
+    @Version
+    var version: Long = 0
 }
