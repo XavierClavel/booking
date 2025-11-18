@@ -1,0 +1,184 @@
+openapi: "3.1.0"
+info:
+  title: "ktor_sample API"
+  description: "ktor_sample API"
+  version: "1.0.0"
+servers:
+  - url: "https://ktor_sample"
+paths:
+  /auth/callback-oauth-google:
+    get:
+      description: ""
+      responses:
+        "302":
+          description: "Found <br> Redirect"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /auth/login:
+    post:
+      description: ""
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                enum:
+                  - "USER_NOT_FOUND"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /auth/login-oauth-google:
+    get:
+      description: ""
+  /auth/logout:
+    post:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /auth/me:
+    get:
+      description: ""
+      responses:
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                enum:
+                  - "USER_NOT_FOUND"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserOut"
+  /auth/signup:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupDto"
+        required: true
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserOut"
+  /users:
+    get:
+      description: "Retrieves all users registered in the system. <br> 200 OK - Returns\
+        \ a list of User objects"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/UserOut"
+  /users/{id}:
+    get:
+      description: "Retrieves the user that matches the id. <br> 200 OK - Returns\
+        \ a User object that matches the given id <br> 404 Not Found - If no user\
+        \ exists with the provided id"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                enum:
+                  - "NOT_APPLICABLE_ON_SELF"
+                  - "MAIL_ALREADY_USED"
+                  - "USERNAME_ALREADY_USED"
+                  - "OAUTH_ONLY"
+                  - "INVALID_REQUEST"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+                enum:
+                  - "USER_NOT_FOUND"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserOut"
+components:
+  schemas:
+    UserOut:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        username:
+          type: "string"
+        role:
+          type: "string"
+          enum:
+            - "USER"
+            - "ADMIN"
+      required:
+        - "id"
+        - "username"
+        - "role"
+    SignupDto:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        emailAddress:
+          type: "string"
+        password:
+          type: "string"
+      required:
+        - "username"
+        - "emailAddress"
+        - "password"
