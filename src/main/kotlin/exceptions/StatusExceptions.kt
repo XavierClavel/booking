@@ -20,6 +20,7 @@ enum class UnauthorizedCause(val key: String) {
 enum class ForbiddenCause(val key: String) {
     MUST_BE_PERFORMED_ON_SELF("must_be_performed_on_self"),
     MUST_BE_ADMIN("must_be_admin"),
+    MUST_HAVE_CREATED_BOOKING("must_have_created_booking"),
 }
 
 enum class NotFoundCause(val key: String) {
@@ -36,4 +37,11 @@ enum class BadRequestCause (val key: String) {
     INVALID_REQUEST("invalid_request"),
     ROOM_IS_ALREADY_INACTIVE("room_is_already_inactive"),
     ROOM_IS_ALREADY_ACTIVE("room_is_already_active"),
+    ROOM_IS_INACTIVE("room_is_inactive"),
+    START_TIME_MUST_BE_BEFORE_END_TIME("start_time_must_be_before_end_time"),
+    MAX_8_HOURS("max_8_hours"),
+    ROOM_MUST_BE_AVAILABLE("room_must_be_available"),
+    CANNOT_BOOK_IN_THE_PAST("cannot_book_in_the_past"),
+    BOOKING_ALREADY_CANCELLED("booking_already_canceled"),
+    BOOKING_MUST_BE_IN_FUTURE("booking_must_be_in_future"),
 }

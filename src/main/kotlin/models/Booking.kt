@@ -1,6 +1,8 @@
 package com.xavierclavel.models
 
+import com.xavierclavel.enums.BookingStatus
 import com.xavierclavel.enums.RoomStatus
+import com.xavierclavel.services.BookingService
 import io.ebean.Model
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -27,17 +29,15 @@ class Booking(
     @Column(updatable = false)
     val endTime: LocalDateTime,
 
-    @Enumerated(EnumType.STRING)
-    var status: RoomStatus,
-
-    @Column(updatable = false)
-    val createdAt: LocalDateTime,
-
 
     ): Model() {
 
     @Id
     var id: Long = 0
 
+    @Column(updatable = false)
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
+    @Enumerated(EnumType.STRING)
+    var status: BookingStatus = BookingStatus.CONFIRMED
 }
