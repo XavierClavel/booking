@@ -20,6 +20,7 @@ fun Application.configureStatusPages() {
             call.respond(HttpStatusCode.BadRequest, cause.reason.key)
         }
         exception<UnauthorizedException> { call, cause ->
+            logger.error { cause.reason }
             call.respond(HttpStatusCode.Unauthorized, cause.reason.key)
         }
         exception<ForbiddenException> { call, cause ->

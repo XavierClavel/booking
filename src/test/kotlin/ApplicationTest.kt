@@ -7,7 +7,9 @@ import com.xavierclavel.plugins.DatabaseManager
 import com.xavierclavel.plugins.RedisService
 import com.xavierclavel.services.AuthService
 import com.xavierclavel.services.EncryptionService
+import com.xavierclavel.services.RoomService
 import com.xavierclavel.services.UserService
+import com.xavierclavel.utils.logger
 import com.xavierclavel.utils.login
 import com.xavierclavel.utils.logout
 import io.ktor.client.HttpClient
@@ -51,6 +53,7 @@ abstract class ApplicationTest: KoinTest {
                 single { AuthService() }
                 single { testConfig }
                 single { EncryptionService() }
+                single { RoomService() }
             }
 
             startKoin {

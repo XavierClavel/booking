@@ -4,6 +4,7 @@ import com.xavierclavel.config.Configuration
 import com.xavierclavel.dtos.SignupDto
 import com.xavierclavel.dtos.UserIn
 import com.xavierclavel.dtos.UserOut
+import com.xavierclavel.enums.UserRole
 import com.xavierclavel.exceptions.BadRequestCause
 import com.xavierclavel.exceptions.BadRequestException
 import com.xavierclavel.exceptions.NotFoundCause
@@ -81,10 +82,11 @@ class UserService: KoinComponent {
         QUser().username.eq(username).exists()
 
     fun setupDefaultAdmin() {
-        val dto = SignupDto(
+        User(
             username = "admin",
-            password = configuration.admin.password,
-            emailAddress = "admin@mail.com"
-        )
+            hashedPassword = encryptionService.encryptPassword(configuration.admin.password),
+            emailAddress = "admin@mail.com",
+            role = UserRole.ADMIN,
+        ).save()
     }
 }

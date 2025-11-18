@@ -2,6 +2,12 @@ package com.xavierclavel.plugins
 
 import com.xavierclavel.dtos.UserOut
 import com.xavierclavel.enums.UserRole
+import com.xavierclavel.exceptions.ForbiddenCause
+import com.xavierclavel.exceptions.ForbiddenException
+import com.xavierclavel.exceptions.NotFoundCause
+import com.xavierclavel.exceptions.NotFoundException
+import com.xavierclavel.exceptions.UnauthorizedCause
+import com.xavierclavel.exceptions.UnauthorizedException
 import io.lettuce.core.ExperimentalLettuceCoroutinesApi
 import io.lettuce.core.RedisClient
 import io.lettuce.core.api.coroutines
@@ -48,8 +54,12 @@ class RedisService(redisUrl: String): KoinComponent {
         return Json.decodeFromString<SessionData>(json)
     }
 
-    suspend fun isUserAdmin(sessionId: String): Boolean =
-        getSession(sessionId)?.role == UserRole.ADMIN
+    suspend fun checkIfAdmin(sessionId: String){
+        val session = getSession(sessionId) ?: throw UnauthorizedException(UnauthorizedCause.SESSION_NOT_FOUND)
+        if (session.role != UserRole.ADMIN) {
+            throw ForbiddenException(ForbiddenCause.MUST_BE_ADMIN)
+        }
+    }
 
 
 }

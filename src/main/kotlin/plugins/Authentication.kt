@@ -1,7 +1,6 @@
 package com.xavierclavel.plugins
 
 import com.xavierclavel.config.Configuration
-import com.xavierclavel.exceptions.BadRequestException
 import com.xavierclavel.exceptions.UnauthorizedCause
 import com.xavierclavel.exceptions.UnauthorizedException
 import com.xavierclavel.services.AuthService
@@ -86,11 +85,7 @@ fun Application.configureAuthentication() {
 
         session<UserSession>("admin-session") {
             validate { session ->
-                if (redisService.isUserAdmin(session.sessionId)) {
-                    session
-                } else {
-                    null
-                }
+                redisService.checkIfAdmin(session.sessionId)
             }
             challenge {
                 throw UnauthorizedException(UnauthorizedCause.SESSION_NOT_FOUND)
